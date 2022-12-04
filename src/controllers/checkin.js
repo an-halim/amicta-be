@@ -17,9 +17,8 @@ const checkIn = async (req, res) => {
   if (validate.length > 0) {
     return responses[validate[0][0]](res, validate[0][1]);
   }
-  
 
-  const user = await users.findOne({ where: { email } });
+  const user = await users.findOrCreate({ where: { email } });
   if (!user) {
     let user = await users.create({ email });
     return responses.success(res, user);
